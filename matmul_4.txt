@@ -1,0 +1,23 @@
+// A : i8[12544,64]
+// B : i8[64,256] 
+
+(arrange (Idx 1) (Bound 4)
+  (arrange (Idx 1) (Bound 196)
+    (arrange (Idx 2) (Bound 4)
+             (mvin (arrange (Idx 3) (Bound 64)
+                            (arrange (Idx 1) (Bound 16) a))
+                   (mvout
+                      (reduce (Idx 3) (Bound 4)
+                              (mvin (arrange (Idx 2) (Bound 64)
+                                             (arrange (Idx 3) (Bound 16) b))
+                                    (arrange (Idx 2) (Bound 4))
+                                             (gemmini-compute (make-Mtx a (list (Idx 1) (Idx 3))
+                                                                          (list (cons (Idx 1) (Bound 1))
+                                                                                (cons (Idx 3) (Bound 1)))
+                                                                          (make-Size (Int8 16) (Int8 16))
+                                                                          (list))
+                                                              (make-Mtx b (list (Idx 3) (Idx 2))
+                                                                          (list (cons (Idx 3) (Bound 1))
+                                                                                (cons (Idx 2) (Bound 1)))
+                                                                          (make-Size (Int8 16) (Int8 16))
+                                                                          (list)))))))))
